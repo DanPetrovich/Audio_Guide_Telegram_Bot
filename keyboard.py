@@ -24,7 +24,7 @@ for item in menu:
     in_journey_markup.add(types.KeyboardButton(text=item, callback_data=item))
 
 story_type_markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=4)
-menu = ['Хочу устно', 'хочу текстом']
+menu = ['Давай в голосовом формате', 'Давай в текстовом формате']
 for item in menu:
     story_type_markup.add(types.KeyboardButton(text=item, callback_data=item))
 

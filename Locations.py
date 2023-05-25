@@ -6,31 +6,51 @@ class Location:
     name = ''
     oral_messages_to_forward = []
     written_messages_to_forward = []
-    photos = []
+    url_to_route = ''
 
 
-list_of_locations = ['Басмач', 'Покровка', 'Малый трехсвят и Хитровка',
-                     'Большой трехсвят', 'Армянский переулок', 'Мясницкая']
+list_of_locations = ['Басманная', 'Покровский бульвар', 'Малый Трехсвятительский и Хитровкский переулки',
+                     'Большой Трехсвятительский переулок', 'Мясницкая']
 
-loc_map = {'Армянский переулок': 4, 'Мясницкая': 5, 'Покровка': 1, 'Большой трехсвят': 3,
-           'Малый трехсвят и Хитровка': 2, 'Басмач': 0}
+loc_map = {'Мясницкая': 4, 'Покровский бульвар': 1, 'Большой Трехсвятительский переулок': 3,
+            'Малый Трехсвятительский и Хитровкский переулки': 2, 'Басманная': 0}
 
 Basmach = Location()
-
+Basmach.url_to_route = 'https://yandex.ru/maps/-/CCUo7-aaSC'
 Myasnickaya = Location()
-Krivokolennyi = Location()
-Armyanskii = Location()
+Myasnickaya.url_to_route = 'https://yandex.ru/maps/-/CCUo72Eg~C'
 B_Trehsvyat = Location()
+B_Trehsvyat.url_to_route = 'https://yandex.ru/maps/-/CCUo72fTWA'
 Pokrovka = Location()
+Pokrovka.url_to_route = 'https://yandex.ru/maps/-/CCUo72qCCC'
 M_Trehsvyat = Location()
+M_Trehsvyat.url_to_route = 'https://yandex.ru/maps/-/CCUo72xn9C'
 
-locations = [Basmach, Armyanskii, B_Trehsvyat, Pokrovka, M_Trehsvyat]
+locations = [Basmach, Pokrovka, M_Trehsvyat, B_Trehsvyat,  Myasnickaya]
 
-loc_dict = {'Басмач': Basmach, 'Мясницкая': Myasnickaya, 'Армянский переулок': Armyanskii,
-            'Большой трехсвят': B_Trehsvyat, 'Покровка': Pokrovka, 'Малый трехсвят и Хитровка': M_Trehsvyat}
+loc_map_2 = {Myasnickaya: 4, Pokrovka: 1, B_Trehsvyat: 3,
+           M_Trehsvyat: 2, Basmach: 0}
 
-for key, val in loc_dict.items():
-    val.name = key
-    val.number = loc_map[key]
+loc_dict = {'Басманная': Basmach, 'Мясницкая': Myasnickaya,
+            'Большой Трехсвятительский переулок': B_Trehsvyat, 'Покровский бульвар': Pokrovka,
+            'Малый Трехсвятительский и Хитровкский переулки': M_Trehsvyat}
 
+Basmach.name = 'Басманной'
 Basmach.oral_messages_to_forward = data.Basmach_audio
+Basmach.written_messages_to_forward = data.Basmach_text
+
+Myasnickaya.name = 'Мясницкой'
+Myasnickaya.written_messages_to_forward = data.Myasnickaya_text
+Myasnickaya.oral_messages_to_forward = data.Myasnickaya_audio
+
+B_Trehsvyat.name = 'Большом Трехсвятительском переулке'
+B_Trehsvyat.written_messages_to_forward = data.B_Trehsvyat_text
+B_Trehsvyat.oral_messages_to_forward = data.B_Trehsvyat_audio
+
+M_Trehsvyat.name = 'Малом Трехсвятительском и Хитровкском переулках'
+M_Trehsvyat.written_messages_to_forward = data.M_Trehsvyat_text
+M_Trehsvyat.oral_messages_to_forward = data.M_Trehsvyat_audio
+
+Pokrovka.name = 'Покровском бульваре'
+Pokrovka.written_messages_to_forward = data.Pokra_text
+Pokrovka.oral_messages_to_forward = data.Pokra_audio

@@ -21,7 +21,9 @@ Basmach_audio = [('https://drive.google.com/file/d/1qa8IB7hBiVbINWSRmcLXpuTBR-IX
                   'https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%BE%D0%B2,_%D0%9B%D0%B5%D0%BE%D0%BD%D0%B8%D0%B4_%D0%90%D1%80%D0%BA%D0%B0%D0%B4%D1%8C%D0%B5%D0%B2%D0%B8%D1%87'),
 
                  ('https://drive.google.com/file/d/14XBFEVadlhk9nVHW7cnhUBnUfDAq8HVP/view?usp=share_link', 'photo',
-                  "Памятник Катюше"),
+                  "Памятник Катюше",
+                  'https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D1%82%D1%8E%D1%88%D0%B0_(%D0%BF%D1%80%D0%BE%D0%B7%D0%B2%D0%B8%D1%89%D0%B5_%D0%BE%D1%80%D1%83%D0%B6%D0%B8%D1%8F)'),
+
                  ('https://drive.google.com/file/d/1jBeiZplzyDAEo7W_nE2630C8qTp0sNr-/view?usp=share_link', 'audio'),
                  ('https://drive.google.com/file/d/1YkZ08NwYMnnpXh_U2qV8mITAkPcoBp2a/view?usp=share_link', 'photo',
                   'Фото здания после пожара 1990 года'),
@@ -57,7 +59,9 @@ Basmach_text = [('https://drive.google.com/file/d/1Aoidb81XaSeBnoDpcUGbt37wWHKn1
 
                 5,
                 ('https://drive.google.com/file/d/14XBFEVadlhk9nVHW7cnhUBnUfDAq8HVP/view?usp=share_link', 'photo',
-                 "Памятник Катюше"), 6,
+                 "Памятник Катюше",
+                 'https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D1%82%D1%8E%D1%88%D0%B0_(%D0%BF%D1%80%D0%BE%D0%B7%D0%B2%D0%B8%D1%89%D0%B5_%D0%BE%D1%80%D1%83%D0%B6%D0%B8%D1%8F)'),
+                6,
                 ('https://drive.google.com/file/d/1YkZ08NwYMnnpXh_U2qV8mITAkPcoBp2a/view?usp=share_link', 'photo',
                  'Фото здания после пожара 1990 года'),
                 ('https://drive.google.com/file/d/1Px4BSTne-GHTXj7HAixfWwEvFm4-Ie3_/view?usp=share_link', 'photo', ''),
@@ -332,9 +336,13 @@ Pokra_audio = [('https://drive.google.com/file/d/1H42sztPahDM-S_-_yiEWFyvTt7f94H
                 'Дом Дурасова'),
                ('https://drive.google.com/file/d/1sK8SFl_IJoGfqRERMeNU72nWcjvLxUGE/view?usp=share_link', 'audio'),
                ('https://drive.google.com/file/d/1ZOmFSraZrEDlTQXTNmpLF9vHwIF_EEgc/view?usp=share_link', 'photo',
-                'Фото А. И. Абрикосова'),
+                'Фото А. И. Абрикосова',
+                'https://ru.wikipedia.org/wiki/%D0%90%D0%B1%D1%80%D0%B8%D0%BA%D0%BE%D1%81%D0%BE%D0%B2,_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%B8%D1%87_(%D0%BF%D1%80%D0%B5%D0%B4%D0%BF%D1%80%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D1%82%D0%B5%D0%BB%D1%8C)'),
+
                ('https://drive.google.com/file/d/1r7MbxpLy_fnIC34_JTzrv22VFOF8EkOB/view?usp=share_link', 'photo',
-                'Концерн Бабаевский'),
+                'Концерн Бабаевский',
+                'https://ru.wikipedia.org/wiki/%D0%91%D0%B0%D0%B1%D0%B0%D0%B5%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_(%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D1%80%D0%BD)'),
+
                ('https://drive.google.com/file/d/1J7VcIPFU_ps-M47hc8XMVnAQBOM4sgW0/view?usp=share_link', 'audio'),
                ('https://drive.google.com/file/d/1jqUyas22Nw63BmDJDAzhNnc68xhpc44Q/view?usp=share_link', 'photo',
                 'Тот самый дом с гипсовыми статуями'),

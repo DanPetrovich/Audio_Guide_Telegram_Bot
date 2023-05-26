@@ -8,7 +8,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.types import Message
 import logging
 import time
-from aiogram.utils.markdown import link
+import urllib.parse
 import soundfile as sf
 import requests
 import io
@@ -57,8 +57,8 @@ async def show_admin_buttons(message: Message):
              'Вперед, наслаждайся путешествием!\n'
              '(ознакомиться с маршрутом можно по ссылке ниже)\n'
              'https://www.google.com/maps/d/viewer?mid=1-Y--S0OsnLMnIXPRV1Caa3ByGpcd9R0&ll=55.75988559898732%2C37.64784719999998&z=15\n'
-             'P.S. Мы были бы очень признаетельны, если бы ты заполнил форму обратной связи, '
-             'которая будет домтупна после прохождения экскурсии')
+             'P.S. Мы были бы очень признательны, если бы ты заполнил форму обратной связи, '
+             'которая будет доступна после прохождения экскурсии')
     time.sleep(3)
     await message.answer(text='Если ты готов, то выбирай локацию, откуда хочешь начать',
                          reply_markup=keyboard.locations_markup)
@@ -71,8 +71,13 @@ async def choose_first_point(message: types.Message, state: FSMContext):
     global location_ptr
     global direction
     global cur_point
-    location_ptr = Locations.loc_map[message.text]
-    cur_point = Locations.loc_dict[message.text]
+    try:
+        location_ptr = Locations.loc_map[message.text]
+        cur_point = Locations.loc_dict[message.text]
+    except:
+        await message.answer("Не, надо нажать на кнопку", reply_markup=keyboard.locations_markup)
+        await Dialog.start_location.set()
+        return
     if location_ptr != 0 and location_ptr != 4:
         direction_markup = types.ReplyKeyboardMarkup()
         direction_markup.add(types.KeyboardButton(text='В сторону Басманной'))
@@ -103,10 +108,17 @@ async def choose_direction(message: types.Message):
     :return: void
     """
     global direction
-    if message.text == "Мясницкая":
+    if message.text == "В сторону Мясницкой":
         direction = Direction.up
+    elif message.text == 'В сторону Басманной':
+        direction = Direction.down
     else:
-        direction = Direction.up
+        direction_markup = types.ReplyKeyboardMarkup()
+        direction_markup.add(types.KeyboardButton(text='В сторону Басманной'))
+        direction_markup.add(types.KeyboardButton(text='В сторону Мясницкой'))
+        await message.answer("Не, надо нажать на кнопку", reply_markup=direction_markup)
+        await Dialog.choose_direction.set()
+        return
     await message.answer('Супер! Тогда давай начинать! Я готов рассказать тебе о первой локации',
                          reply_markup=types.ReplyKeyboardRemove())
     await choose_type(message)
@@ -159,7 +171,7 @@ async def have_arrived(message: types.Message):
 @dp.message_handler(state=Dialog.choose_story_type)
 async def choose_type(message: types.Message):
     await message.answer('Отлично\n '
-                         'Но сначала скажи, как вы хочешь получать информацию? Ушами или глазами?'
+                         'Но сначала скажи, как ты хочешь получать информацию? Ушами или глазами?'
                          '(ну то есть голосовым или текстом?)',
                          reply_markup=keyboard.story_type_markup)
 
@@ -224,7 +236,8 @@ def get_duration(file: io.BytesIO):
 
 
 def make_link(picture_tuple: tuple):
-    return '[' + picture_tuple[2] + '](' + picture_tuple[3] + ')'
+    url = urllib.parse.quote_plus(picture_tuple[3])
+    return '[' + picture_tuple[2] + '](' + url + ')'
 
 
 @dp.message_handler(state=Dialog.start_story)
@@ -270,6 +283,8 @@ async def start_story(message: types.Message, state: FSMContext):
                     await bot.send_message(message.chat.id,
                                            'Упс, гугл ругается, потому что наш бот только что стал популярнее гугл драйва\n '
                                            'Возможно, придется немного подождать, мы тут не можем ничего сделать(')
+                    print(cur_point.oral_messages_to_forward[i])
+                    print(cur_point.name)
 
             elif 'photo' in content_type:
 
@@ -289,8 +304,10 @@ async def start_story(message: types.Message, state: FSMContext):
                     await bot.send_message(message.chat.id,
                                            'Упс, гугл ругается, потому что наш бот только что стал популярнее гугл драйва\n '
                                            'Возможно, придется немного подождать, мы тут не можем ничего сделать(')
+                    print(cur_point.oral_messages_to_forward[i])
+                    print(cur_point.name)
 
-    else:
+    elif message.text == 'Давай в текстовом формате':
         written_messages = cur_point.written_messages_to_forward
         url_text, file_type_text = written_messages[0]
 
@@ -307,8 +324,6 @@ async def start_story(message: types.Message, state: FSMContext):
                 try:
                     file = io.BytesIO(response.content)
 
-                    print(cur_point.written_messages_to_forward[index])
-
                     if len(cur_point.written_messages_to_forward[index]) == 4:
                         caption = make_link(cur_point.written_messages_to_forward[index])
                         await bot.send_photo(message.chat.id, file, caption, parse_mode='Markdown')
@@ -320,6 +335,7 @@ async def start_story(message: types.Message, state: FSMContext):
                     await bot.send_message(message.chat.id,
                                            'Упс, гугл ругается, потому что наш бот только что стал популярнее гугл драйва\n '
                                            'Возможно, придется немного подождать, мы тут не можем ничего сделать(')
+                    print(print(cur_point.written_messages_to_forward[index]))
             else:
                 part = text_parts[written_messages[index]]
 
@@ -327,10 +343,15 @@ async def start_story(message: types.Message, state: FSMContext):
                     await bot.send_message(message.chat.id,
                                            'Упс, гугл ругается, потому что наш бот только что стал популярнее гугл драйва\n '
                                            'Возможно, придется немного подождать, мы тут не можем ничего сделать(')
+                    print(cur_point.written_messages_to_forward[index])
                     continue
                 await bot.send_message(message.chat.id, part)
 
                 await asyncio.sleep(count_time(part))
+
+    else:
+        await message.answer("Не, надо нажать на кнопку", reply_markup=keyboard.story_type_markup)
+        await Dialog.start_story.set()
 
     await state.finish()
 
@@ -361,7 +382,11 @@ async def info(message: types.Message):
                          'Несмотря на то, что это аудиогид, вы можете получать информацию и в виде '
                          'текста, а еще будут картинки)\n'
                          'Как пользоваться ботом? Мы его сделали максимально понятным и интуитивным, так что уверены, '
-                         'проблем во время экскурсий возникнуть не должно.')
+                         'проблем во время экскурсий возникнуть не должно.\n'
+                         'Вот авторы проекта:\n'
+                         '@Nekto22\n'
+                         '@lizakapranova\n'
+                         '@eleanorra')
 
 
 if __name__ == '__main__':

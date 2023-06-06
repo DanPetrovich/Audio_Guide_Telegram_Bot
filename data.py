@@ -1,6 +1,6 @@
 Basmach_audio = [('https://drive.google.com/file/d/1qa8IB7hBiVbINWSRmcLXpuTBR-IXJhYM/view?usp=share_link', 'audio'),
                  ('https://drive.google.com/file/d/1NwW1JiDsznF-OQZNBe43TiOYW8qdASH2/view?usp=share_link', 'photo',
-                  'Портрет самого А.Б. Куракина',
+                  'Портрет А.Б. Куракина',
                   'https://ru.wikipedia.org/wiki/%D0%9A%D1%83%D1%80%D0%B0%D0%BA%D0%B8%D0%BD,_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%91%D0%BE%D1%80%D0%B8%D1%81%D0%BE%D0%B2%D0%B8%D1%87'),
 
                  ('https://drive.google.com/file/d/1KB3k4FspkDnMULwuuQWdmiqYuUyziHXl/view?usp=share_link', 'audio'),

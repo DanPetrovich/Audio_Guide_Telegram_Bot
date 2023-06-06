@@ -12,6 +12,7 @@ import urllib.parse
 import soundfile as sf
 import requests
 import io
+import html
 
 import Locations
 import config
@@ -154,7 +155,6 @@ async def go_futher(message: types.Message):
         )
 
         await message.answer('Мы в пути!', reply_markup=keyboard.in_journey_markup)
-        # TODO описать маршрут до следующей точки
 
 
 @dp.message_handler(text='Я дошел до точки')
@@ -236,8 +236,8 @@ def get_duration(file: io.BytesIO):
 
 
 def make_link(picture_tuple: tuple):
-    url = urllib.parse.quote_plus(picture_tuple[3])
-    return '[' + picture_tuple[2] + '](' + url + ')'
+    url = html.escape(picture_tuple[3])
+    return f'<a href="{url}">{picture_tuple[2]}</a>'
 
 
 @dp.message_handler(state=Dialog.start_story)
@@ -294,7 +294,8 @@ async def start_story(message: types.Message, state: FSMContext):
 
                     if len(cur_point.oral_messages_to_forward[i]) == 4:
                         caption = make_link(cur_point.oral_messages_to_forward[i])
-                        await bot.send_photo(message.chat.id, file, caption, parse_mode='Markdown')
+                        print(caption)
+                        await bot.send_photo(message.chat.id, file, caption, parse_mode='HTML')
                     else:
                         caption = cur_point.oral_messages_to_forward[i][2]
                         await bot.send_photo(message.chat.id, file, caption)
@@ -326,7 +327,7 @@ async def start_story(message: types.Message, state: FSMContext):
 
                     if len(cur_point.written_messages_to_forward[index]) == 4:
                         caption = make_link(cur_point.written_messages_to_forward[index])
-                        await bot.send_photo(message.chat.id, file, caption, parse_mode='Markdown')
+                        await bot.send_photo(message.chat.id, file, caption, parse_mode='HTML')
                     else:
                         caption = cur_point.written_messages_to_forward[index][2]
                         await bot.send_photo(message.chat.id, file, caption)
